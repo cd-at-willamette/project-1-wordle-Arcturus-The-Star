@@ -12,23 +12,7 @@ import random
 
 def wordle():
     # The main function to play the Wordle game.
-    guess_str = 'glass'
-    guess_low = guess_str.lower()
-    guess_cap = guess_str.upper()
-    def enter_action():
-        # What should happen when RETURN/ENTER is pressed.
-        if is_english_five(guess_low) == True:
-            gw.show_message("That's a five letter English word")
-        else:
-            gw.show_message("Not in word list")
-
-    def word_to_row(word:str, row:int):
-        # Sets a row to a specific word
-        col = 0 #starts in the first column
-        for letter in word: #for every letter, add that letter then advance a column
-            gw.set_square_letter(row, col, letter)
-            col += 1
-
+    gw = WordleGWindow()
     def word_from_row(row:int) -> str:
         # Takes that word from the row
         word = '' #empty string to add letters to
@@ -38,14 +22,34 @@ def wordle():
             col += 1 #advance to the next column
         return word
 
+    def enter_action():
+        guess_str = word_from_row(0)
+        guess_low = guess_str.lower()
+        guess_cap = guess_str.upper()
+        # What should happen when RETURN/ENTER is pressed.
+        if is_english_five(guess_low):
+            gw.show_message("That's a five letter English word")
+        else:
+            gw.show_message("Not in word list")
+
+    gw.add_enter_listener(enter_action)
+
+    def word_to_row(word:str, row:int):
+        # Sets a row to a specific word
+        col = 0 #starts in the first column
+        for letter in word: #for every letter, add that letter then advance a column
+            gw.set_square_letter(row, col, letter)
+            col += 1
+
+
+
     def is_english_five(word:str) -> bool:
         if len(word) == 5 and word in ENGLISH_WORDS:
             return True
         else:
             return False
 
-    gw = WordleGWindow()
-    gw.add_enter_listener(enter_action)
+
 
 
 
