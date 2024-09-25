@@ -42,10 +42,11 @@ def wordle():
         if is_english_five(guess_low):
             color_row(row, answer_up)
             if guess_up == answer_up:
-                gw.show_message('You won!!! Congartularons')
+                gw.show_message('You did the win!!! Congartularons')
+                gw.set_current_row(N_ROWS)
             else:
                 row += 1
-                if row == 6:
+                if row == N_ROWS:
                     gw.show_message(answer_up)
                 else:
                     gw.set_current_row(row)
