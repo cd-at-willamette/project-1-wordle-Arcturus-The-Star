@@ -35,12 +35,24 @@ def wordle():
         # What should happen when RETURN/ENTER is pressed.
         guess_str = word_from_row(gw.get_current_row()) #gets the word from the current row
         guess_low = guess_str.lower() #the guess but lowercase, important for comparing to
-        guess_cap = guess_str.upper()
-        debugging and print('guess is:', guess_cap)
+        guess_up = guess_str.upper()
+        row = gw.get_current_row()
+        debugging and print('guess is:', guess_up)
+        debugging and print('current row is:', row)
         if is_english_five(guess_low):
-            color_row(0, answer_up)
+            color_row(row, answer_up)
+            if guess_up == answer_up:
+                gw.show_message('You won!!! Congartularons')
+            else:
+                row += 1
+                if row == 6:
+                    gw.show_message(answer_up)
+                else:
+                    gw.set_current_row(row)
         else:
             gw.show_message("Not in word list")
+
+
 
     gw.add_enter_listener(enter_action)
 
@@ -63,9 +75,9 @@ def wordle():
         for i in range(len(guess_str)): #colors all the correct letters green
             if guess_str[i] == answer[i]:
                 gw.set_square_color(row, col, CORRECT_COLOR)
-                corr_index.append(i)
+                corr_index.append(i) #adds the letter's index to the correct letters list
             else:
-                partial_answer += answer[i]
+                partial_answer += answer[i] #adds the current letter to the partial answer variable
             col += 1
         col = 0 #resets the column for the next color
         debugging and print('correct letter indices are:', corr_index)
@@ -76,7 +88,7 @@ def wordle():
                 if guess_str[c] in partial_answer: #if the current letter is one of the remaining letters we need to check
                         if guess_str[c] not in used_letters: #if the letter has not been used already
                             gw.set_square_color(row, col, PRESENT_COLOR)
-                            used_letters += guess_str[c]
+                            used_letters += guess_str[c] #adds the letter to the already used letters
             col += 1
         debugging and print('partially correct letters are:', used_letters)
 
