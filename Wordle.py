@@ -10,7 +10,7 @@ from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PR
 from english import * # ENGLISH_WORDS, is_english_word
 import random
 from random import *
-debugging = True
+debugging = False
 def wordle():
     # The main function to play the Wordle game.
     def random_answer():
@@ -31,6 +31,7 @@ def wordle():
             col += 1 #advance to the next column
         return word
 
+
     def enter_action():
         # What should happen when RETURN/ENTER is pressed.
         guess_str = word_from_row(gw.get_current_row()) #gets the word from the current row
@@ -42,7 +43,7 @@ def wordle():
         if is_english_five(guess_low):
             color_row(row, answer_up)
             if guess_up == answer_up:
-                gw.show_message('You did the win!!! Congartularons')
+                gw.show_message('You did the win!!! Congartularons!!!')
                 gw.set_current_row(N_ROWS)
             else:
                 row += 1
@@ -64,19 +65,24 @@ def wordle():
             gw.set_square_letter(row, col, letter)
             col += 1
 
+    colored_keys = [] #stores the keys that have already been colored so they don't get colored again
+
     def color_row(row:int, answer:str):
         guess_str = word_from_row(row)
         col = 0 #resets the column for the next color
         corr_index = [] #holds the index numbers of the correct letters
         partial_answer = '' #holds the answer minus the correct letters
-        for letter in answer: #colors it all grey first so the missing letters stay that way
+        for letter in guess_str: #colors it all grey first so the missing letters stay that way
             gw.set_square_color(row,col, MISSING_COLOR)
+            if letter not in colored_keys: #if the letter still needs to be colored, color it
+                gw.set_key_color(letter, MISSING_COLOR)
             col += 1
         col = 0
         for i in range(len(guess_str)): #colors all the correct letters green
             if guess_str[i] == answer[i]:
                 gw.set_square_color(row, col, CORRECT_COLOR)
                 corr_index.append(i) #adds the letter's index to the correct letters list
+                gw.set_key_color(guess_str[i], CORRECT_COLOR) #colors the key green if it's a correct letter
             else:
                 partial_answer += answer[i] #adds the current letter to the partial answer variable
             col += 1
@@ -89,9 +95,13 @@ def wordle():
                 if guess_str[c] in partial_answer: #if the current letter is one of the remaining letters we need to check
                         if guess_str[c] not in used_letters: #if the letter has not been used already
                             gw.set_square_color(row, col, PRESENT_COLOR)
+                            if guess_str[c] not in colored_keys: #if the key still needs to be colored, color it
+                                gw.set_key_color(guess_str[c], PRESENT_COLOR)
                             used_letters += guess_str[c] #adds the letter to the already used letters
             col += 1
         debugging and print('partially correct letters are:', used_letters)
+        for letter in guess_str:
+            colored_keys.append(letter) #puts the colored letters into the master list
 
 
 
