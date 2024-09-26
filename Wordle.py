@@ -8,14 +8,14 @@
 
 from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, UNKNOWN_COLOR
 from english import * # ENGLISH_WORDS, is_english_word
-import random
 from random import *
+from betterenglish import *
 debugging = False
 def wordle():
     # The main function to play the Wordle game.
     def random_answer():
-        shuffle(ENGLISH_WORDS) #puts ENGLISH_WORDS in a random order
-        for word in ENGLISH_WORDS: #go through ENGLISH_WORDS until it finds a five-letter word
+        shuffle(betterenglish) #puts ENGLISH_WORDS in a random order
+        for word in betterenglish: #go through ENGLISH_WORDS until it finds a five-letter word
             if len(word) == 5:
                 return word #returns the first five-letter word
     answer_str = random_answer() #makes our answer a random five-letter word
@@ -48,7 +48,7 @@ def wordle():
             else:
                 row += 1
                 if row == N_ROWS:
-                    gw.show_message(answer_up)
+                    gw.show_message("You did the lose. Big Sad. The real word was " + str(answer_str) + ":(")
                 else:
                     gw.set_current_row(row)
         else:
@@ -110,8 +110,6 @@ def wordle():
             return True
         else:
             return False
-
-
 
 
 
