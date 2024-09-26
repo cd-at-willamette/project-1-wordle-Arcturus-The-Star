@@ -2,8 +2,8 @@
 # Name: Sophie Avery
 # Collaborators (if any):
 # GenAI Transcript (if any):
-# Estimated time spent (hr):
-# Description of any added extensions:
+# Estimated time spent (hr): 5
+# Description of any added extensions: An improved dictionary called betterenglish, which is a list of all the 5-letter words from the 10000 most common English words according to google analytics
 ########################################
 
 from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, UNKNOWN_COLOR
@@ -53,6 +53,7 @@ def wordle():
                     gw.set_current_row(row)
         else:
             gw.show_message("Not in word list")
+
 
 
 
