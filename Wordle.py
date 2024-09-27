@@ -41,7 +41,7 @@ def wordle():
         debugging and print('guess is:', guess_up)
         debugging and print('current row is:', row)
         if is_english_five(guess_low):
-            color_row(row, answer_up)
+            color_row(row, answer_up, guess_str)
             if guess_up == answer_up:
                 gw.show_message('You did the win!!! Congartularons!!!')
                 gw.set_current_row(N_ROWS)
@@ -68,8 +68,7 @@ def wordle():
 
     colored_keys = [] #stores the keys that have already been colored so they don't get colored again
 
-    def color_row(row:int, answer:str):
-        guess_str = word_from_row(row)
+    def color_row(row:int, answer:str, guess_str:str):
         col = 0 #resets the column for the next color
         corr_index = [] #holds the index numbers of the correct letters
         partial_answer = '' #holds the answer minus the correct letters
@@ -103,7 +102,6 @@ def wordle():
         debugging and print('partially correct letters are:', used_letters)
         for letter in guess_str:
             colored_keys.append(letter) #puts the colored letters into the master list
-
 
 
     def is_english_five(word:str) -> bool:
