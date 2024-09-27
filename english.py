@@ -39,7 +39,7 @@ ENGLISH_WORDS = [
   "abdicated", "abdicates", "abdicating", "abdication", "abdications",
   "abdicator", "abdicators", "abdomen", "abdomens", "abdomina",
   "abdominal", "abdominally", "abduce", "abduced", "abducens",
-  "abducent", "abducentes", "abduces", "abducing", "abduct",
+  "abducent", "abducentes", "abduces", "abducing", "abduct", "karel",
   "abducted", "abducting", "abduction", "abductions", "abductor",
   "abductores", "abductors", "abducts", "abeam", "abed", "abele",
   "abeles", "abelmosk", "abelmosks", "aberrance", "aberrances",
