@@ -2,15 +2,15 @@
 # Name: Sophie Avery
 # Collaborators (if any):
 # GenAI Transcript (if any):
-# Estimated time spent (hr): 6
-# Description of any added extensions: An improved dictionary called betterenglish, which is a list of all the 5-letter words from the 10000 most common English words according to google analytics. It is used only for guess generation, ENGLISH_WORDS is still used for identifying if a word is English
+# Estimated time spent (hr): 5
+# Description of any added extensions: An improved dictionary called betterenglish, which is a list of all the 5-letter words from the 10000 most common English words according to google analytics
 ########################################
 
 from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, UNKNOWN_COLOR
 from english import * # ENGLISH_WORDS, is_english_word
 from random import *
 from betterenglish import *
-debugging = False
+debugging = True #toggles certain print statements so i know what's going on
 def wordle():
     # The main function to play the Wordle game.
     def random_answer():
@@ -26,10 +26,8 @@ def wordle():
     def word_from_row(row:int) -> str:
         # Takes that word from the row
         word = '' #empty string to add letters to
-        col = 0 #starts at the beginning
         for i in range(5): #all the words are 5 letters long
-            word += gw.get_square_letter(row, col)
-            col += 1 #advance to the next column
+            word += gw.get_square_letter(row, i)
         return word
 
 
@@ -66,7 +64,7 @@ def wordle():
     colored_keys = [] #stores the keys that have already been colored so they don't get colored again
 
     def color_row(row:int, answer:str, guess_str:str):
-        col = 0 #resets the column for the next color
+        col = 0 #column tracking variable
         corr_index = [] #holds the index numbers of the correct letters
         partial_answer = '' #holds the answer minus the correct letters
         for letter in guess_str: #colors it all grey first so the missing letters stay that way
@@ -74,16 +72,13 @@ def wordle():
             if letter not in colored_keys: #if the letter still needs to be colored, color it
                 gw.set_key_color(letter, MISSING_COLOR)
             col += 1
-        col = 0
         for i in range(len(guess_str)): #colors all the correct letters green
             if guess_str[i] == answer[i]:
-                gw.set_square_color(row, col, CORRECT_COLOR)
+                gw.set_square_color(row, i, CORRECT_COLOR)
                 corr_index.append(i) #adds the letter's index to the correct letters list
                 gw.set_key_color(guess_str[i], CORRECT_COLOR) #colors the key green if it's a correct letter
             else:
                 partial_answer += answer[i] #adds the current letter to the partial answer variable
-            col += 1
-        col = 0 #resets the column for the next color
         debugging and print('correct letter indices are:', corr_index)
         debugging and print('remaining letters are:', partial_answer)
         used_letters = '' #stores the letters that have been used already, to avoid repeats
@@ -91,11 +86,10 @@ def wordle():
             if c not in corr_index: #if the current letter's index is not the same as a correct letter's index
                 if guess_str[c] in partial_answer: #if the current letter is one of the remaining letters we need to check
                         if guess_str[c] not in used_letters: #if the letter has not been used already
-                            gw.set_square_color(row, col, PRESENT_COLOR)
+                            gw.set_square_color(row, c, PRESENT_COLOR)
                             if guess_str[c] not in colored_keys: #if the key still needs to be colored, color it
                                 gw.set_key_color(guess_str[c], PRESENT_COLOR)
                             used_letters += guess_str[c] #adds the letter to the already used letters
-            col += 1
         debugging and print('partially correct letters are:', used_letters)
         for letter in guess_str:
             colored_keys.append(letter) #puts the colored letters into the master list
