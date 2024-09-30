@@ -10,7 +10,7 @@ from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PR
 from english import * # ENGLISH_WORDS, is_english_word
 from random import *
 from betterenglish import *
-debugging = True #toggles certain print statements so i know what's going on
+debugging = False toggles certain print statements so i know what's going on
 def wordle():
     # The main function to play the Wordle game.
     def random_answer():
