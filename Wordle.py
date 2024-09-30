@@ -2,8 +2,8 @@
 # Name: Sophie Avery
 # Collaborators (if any):
 # GenAI Transcript (if any):
-# Estimated time spent (hr): 5
-# Description of any added extensions: An improved dictionary called betterenglish, which is a list of all the 5-letter words from the 10000 most common English words according to google analytics
+# Estimated time spent (hr): 6
+# Description of any added extensions: An improved dictionary called betterenglish, which is a list of all the 5-letter words from the 10000 most common English words according to google analytics. It is used only for guess generation, ENGLISH_WORDS is still used for identifying if a word is English
 ########################################
 
 from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, UNKNOWN_COLOR
@@ -22,6 +22,7 @@ def wordle():
     answer_up = answer_str.upper() #makes it all capital (very important)
     debugging and print('answer is:', answer_up) #for testing purposes, tell me what the answer is
     gw = WordleGWindow()
+    gw.set_window_title("WERDUL")
     def word_from_row(row:int) -> str:
         # Takes that word from the row
         word = '' #empty string to add letters to
@@ -52,11 +53,7 @@ def wordle():
                 else:
                     gw.set_current_row(row)
         else:
-            gw.show_message("Not in word list")
-
-
-
-
+            gw.show_message("that no english word stoopid")
     gw.add_enter_listener(enter_action)
 
     def word_to_row(word:str, row:int):
@@ -109,12 +106,6 @@ def wordle():
             return True
         else:
             return False
-
-
-
-
-
-
 
 # Startup boilerplate
 if __name__ == "__main__":
